@@ -1,7 +1,7 @@
 import streamlit as st
 import sklearn
 
-# Inject JavaScript globally to handle Enter key and focus on the next input
+
 st.components.v1.html(
     """
     <script>
