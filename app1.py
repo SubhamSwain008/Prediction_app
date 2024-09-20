@@ -1,7 +1,6 @@
 import streamlit as st
 import sklearn
 
-
 st.components.v1.html(
     """
     <script>
@@ -19,63 +18,54 @@ st.components.v1.html(
     });
     </script>
     """,
-    height=0,  # No need for a visible component
+    height=0, 
 )
-st.title("welcome to app") # title hello
-st.header("Path predtiction") # also have sub header
+st.title("Welcome to Path Predtictor") 
 st.info("This will help you to find best career ta suits you")
-a='enter your name :'
-
-
-# #markdown
-# st.markdown("# predict")
-# st.markdown("## predict")
-# #emoji
-# st.markdown(": moon")
 
 
 import pandas as pd
 import numpy as np
 
 dataset=[
-    {"maths": 90, "english": 57, "science": 89, "social_studies": 53, "iq": 72, "stream": "science"},
+    {"maths": 90, "english": 57, "science": 89, "social_studies": 53, "iq": 102, "stream": "science"},
     {"maths": 88, "english": 55, "science": 60, "social_studies": 58, "iq": 105, "stream": "commerce"},
     {"maths": 53, "english": 87, "science": 57, "social_studies": 90, "iq": 72, "stream": "arts"},
 
-    {"maths": 85, "english": 59, "science": 86, "social_studies": 50, "iq": 68, "stream": "science"},
-    {"maths": 85, "english": 52, "science": 57, "social_studies": 50, "iq": 108, "stream": "commerce"},
+    {"maths": 85, "english": 59, "science": 86, "social_studies": 50, "iq": 108, "stream": "science"},
+    {"maths": 85, "english": 52, "science": 57, "social_studies": 50, "iq": 98, "stream": "commerce"},
     {"maths": 55, "english": 86, "science": 55, "social_studies": 91, "iq": 69, "stream": "arts"},
 
-    {"maths": 87, "english": 52, "science": 90, "social_studies": 54, "iq": 65, "stream": "science"},
+    {"maths": 87, "english": 52, "science": 90, "social_studies": 54, "iq": 125, "stream": "science"},
     {"maths": 90, "english": 53, "science": 58, "social_studies": 55, "iq": 110, "stream": "commerce"},
     {"maths": 50, "english": 90, "science": 56, "social_studies": 87, "iq": 74, "stream": "arts"},
 
-    {"maths": 92, "english": 55, "science": 91, "social_studies": 56, "iq": 66, "stream": "science"},
-    {"maths": 92, "english": 58, "science": 54, "social_studies": 50, "iq": 107, "stream": "commerce"},
+    {"maths": 92, "english": 55, "science": 91, "social_studies": 56, "iq": 116, "stream": "science"},
+    {"maths": 92, "english": 58, "science": 54, "social_studies": 50, "iq": 97, "stream": "commerce"},
     {"maths": 51, "english": 89, "science": 58, "social_studies": 88, "iq": 73, "stream": "arts"},
 
-    {"maths": 88, "english": 60, "science": 87, "social_studies": 52, "iq": 69, "stream": "science"},
-    {"maths": 86, "english": 57, "science": 55, "social_studies": 56, "iq": 106, "stream": "commerce"},
+    {"maths": 88, "english": 60, "science": 87, "social_studies": 52, "iq": 109, "stream": "science"},
+    {"maths": 86, "english": 57, "science": 55, "social_studies": 56, "iq": 86, "stream": "commerce"},
     {"maths": 52, "english": 85, "science": 53, "social_studies": 85, "iq": 71, "stream": "arts"},
 
-    {"maths": 91, "english": 54, "science": 88, "social_studies": 55, "iq": 70, "stream": "science"},
-    {"maths": 89, "english": 50, "science": 56, "social_studies": 52, "iq": 111, "stream": "commerce"},
+    {"maths": 91, "english": 54, "science": 88, "social_studies": 55, "iq": 120, "stream": "science"},
+    {"maths": 89, "english": 50, "science": 56, "social_studies": 52, "iq": 91, "stream": "commerce"},
     {"maths": 50, "english": 87, "science": 54, "social_studies": 86, "iq": 70, "stream": "arts"},
 
-    {"maths": 89, "english": 53, "science": 85, "social_studies": 50, "iq": 67, "stream": "science"},
-    {"maths": 90, "english": 50, "science": 53, "social_studies": 57, "iq": 109, "stream": "commerce"},
+    {"maths": 89, "english": 53, "science": 85, "social_studies": 50, "iq": 127, "stream": "science"},
+    {"maths": 90, "english": 50, "science": 53, "social_studies": 57, "iq": 100, "stream": "commerce"},
     {"maths": 51, "english": 85, "science": 57, "social_studies": 90, "iq": 69, "stream": "arts"},
 
-    {"maths": 86, "english": 58, "science": 90, "social_studies": 57, "iq": 69, "stream": "science"},
-    {"maths": 91, "english": 54, "science": 55, "social_studies": 53, "iq": 110, "stream": "commerce"},
+    {"maths": 86, "english": 58, "science": 90, "social_studies": 57, "iq": 109, "stream": "science"},
+    {"maths": 91, "english": 54, "science": 55, "social_studies": 53, "iq": 80, "stream": "commerce"},
     {"maths": 54, "english": 88, "science": 59, "social_studies": 89, "iq": 70, "stream": "arts"},
 
-    {"maths": 90, "english": 51, "science": 88, "social_studies": 52, "iq": 66, "stream": "science"},
-    {"maths": 87, "english": 54, "science": 59, "social_studies": 53, "iq": 109, "stream": "commerce"},
+    {"maths": 90, "english": 51, "science": 88, "social_studies": 52, "iq": 116, "stream": "science"},
+    {"maths": 87, "english": 54, "science": 59, "social_studies": 53, "iq": 89, "stream": "commerce"},
     {"maths": 54, "english": 86, "science": 55, "social_studies": 87, "iq": 71, "stream": "arts"},
 
-    {"maths": 93, "english": 55, "science": 92, "social_studies": 54, "iq": 70, "stream": "science"},
-    {"maths": 89, "english": 52, "science": 52, "social_studies": 54, "iq": 112, "stream": "commerce"},
+    {"maths": 93, "english": 55, "science": 92, "social_studies": 54, "iq": 117, "stream": "science"},
+    {"maths": 89, "english": 52, "science": 52, "social_studies": 54, "iq": 100, "stream": "commerce"},
     {"maths": 53, "english": 89, "science": 56, "social_studies": 88, "iq": 72, "stream": "arts"}
 ]
 
@@ -305,108 +295,139 @@ X_A = X_A[~((X_A < (Q1_A - 1.5 * IQR_A)) |(X_A> (Q3_A + 1.5 * IQR_A))).any(axis=
 
 
 name=st.text_input("Enter your name: ")
-age=st.number_input("please enter your age :")
-last_exam=st.text_input("Last exam passed is 10th or 12th :")
-if '10' in last_exam or 'ten' in last_exam:
-    last_exam=10
 
-    scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
 
-    k = 10 # Number of neighbors
-    knn = KNeighborsClassifier(n_neighbors=k)
 
-    knn.fit(X_train, Y_train)
-    Y_pred = knn.predict(X_test)
-    accuracy = accuracy_score(Y_test, Y_pred)
-    # print(f"Accuracy: {accuracy}")
-    maths=st.number_input("please enter your maths marks :")
-    english=st.number_input("please enter your english marks :")
-    science=st.number_input("please enter your science marks :")
-    social_studies=st.number_input("please enter your social studies marks :")
-    iq=st.number_input("please enter your iq marks :")
-    m_i=[maths,english,science,social_studies,iq]
-    m_i_reshaped = np.array(m_i).reshape(1, -1)
-    Y_pred=knn.predict(m_i_reshaped)
-    a=Y_pred[0]
-    st.markdown(a)
-elif '12' or 'twelve' in last_exam:
-    last_exam=12
-    if last_exam==12:
-     stream=st.text_input("in which stream you were in 12th (Arts/science/commerce) :")
-     if 'cienc' in stream :
-        X_train_S,X_test_S,Y_train_S,Y_test_S=train_test_split(X_S,Y_S,test_size=0.3,random_state=1)
+if 'age' not in st.session_state:
+    st.session_state['age'] = 0
+if 'flag' not in st.session_state:
+    st.session_state['flag'] = 0
+
+
+year1 = st.number_input("Please enter your age:", key="rare")
+
+
+if st.button("Submit Age"):
+    if 16 <= year1 <= 25:
+        st.session_state['flag'] = 1
+        st.session_state['age'] = year1
+        st.success(f"Your valid age is: {year1}")
+    else:
+        st.session_state['age'] = 0
+        st.info("Please enter a valid age (16-25).")
+
+age = st.session_state['age']  
+
+if age != 0:
+    
+
+    last_exam=st.text_input("Last exam passed is 10th or 12th :")
+    if '10' in last_exam or 'ten' in last_exam:
+        st.success(f"Your Class was : 10")
+        last_exam=10
+
         scaler = StandardScaler()
-        X_train_S = scaler.fit_transform(X_train_S)
-        X_test_S = scaler.transform(X_test_S)
+        X_train = scaler.fit_transform(X_train)
+        X_test = scaler.transform(X_test)
 
         k = 10 # Number of neighbors
         knn = KNeighborsClassifier(n_neighbors=k)
 
-        knn.fit(X_train_S, Y_train_S)
-        Y_pred_S = knn.predict(X_test_S)
-        accuracy = accuracy_score(Y_test_S, Y_pred_S)
+        knn.fit(X_train, Y_train)
+        Y_pred = knn.predict(X_test)
+        accuracy = accuracy_score(Y_test, Y_pred)
         # print(f"Accuracy: {accuracy}")
-        maths=int(st.number_input("please enter your maths marks :"))
-        physics=int(st.number_input("please enter your physics marks :"))
-        chemistry=int(st.number_input("please enter your chemistry marks :"))
-        biology=int(st.number_input("please enter your biology marks :"))
-        m_i_s=[maths,physics,chemistry,biology]
-        # st.write(m_i_s)
-        m_i_reshaped = np.array(m_i_s).reshape(1, -1)
-        Y_pred_S=knn.predict(m_i_reshaped)
-        if Y_pred_S[0]==1:
-            st.markdown("# JEE will be best for you")
-        else:
-            if Y_pred_S[0]!=1:
-               st.write(" NEET will be best for you")
+        maths=st.number_input("please enter your maths marks :")
+        english=st.number_input("please enter your english marks :")
+        science=st.number_input("please enter your science marks :")
+        social_studies=st.number_input("please enter your social studies marks :")
+        iq=st.number_input("please enter your iq marks :")
+        m_i=[maths,english,science,social_studies,iq]
+        m_i_reshaped = np.array(m_i).reshape(1, -1)
+        Y_pred=knn.predict(m_i_reshaped)
+        a=Y_pred[0]
+        st.markdown(f"# {a} will be best for you.")
+    elif '12' in last_exam or 'twelve' in last_exam and 10 not in last_exam:
+        st.success(f"Your Class was : 12")
+        last_exam=12
+        if last_exam==12:
+           stream=st.text_input("in which stream you were in 12th (Arts/science/commerce) :")
+           st.success(f"Your Stream was : {stream}")
+        if 'cienc' in stream :
+            X_train_S,X_test_S,Y_train_S,Y_test_S=train_test_split(X_S,Y_S,test_size=0.3,random_state=1)
+            scaler = StandardScaler()
+            X_train_S = scaler.fit_transform(X_train_S)
+            X_test_S = scaler.transform(X_test_S)
 
-     elif 'omm'  in stream :
-        X_train_C,X_test_C,Y_train_C,Y_test_C=train_test_split(X_C,Y_C,test_size=0.3,random_state=1)
-        Scaler=StandardScaler()
-        X_train_C=Scaler.fit_transform(X_train_C)
-        X_test_C=Scaler.transform(X_test_C)
-        K=3
-        knn=KNeighborsClassifier(n_neighbors=K)
-        knn.fit(X_train_C,Y_train_C)
-        Y_pred_C=knn.predict(X_test_C)
-        accuracy=accuracy_score(Y_test_C,Y_pred_C)
-        print(f"Accuracy: {accuracy}")      
-        # Streamlit input fields
-        maths = st.number_input("Enter your maths marks:", key="maths_input")
-        finance = st.number_input("Enter your finance marks:", key="finance_input")
-        accounting = st.number_input("Enter your accounting marks:", key="accounting_input")
-        economics = st.number_input("Enter your economics marks:", key="economics_input")
+            k = 10 # Number of neighbors
+            knn = KNeighborsClassifier(n_neighbors=k)
 
-        # maths = st.number_input("Please enter your maths marks:", key="maths_input")
-        # finance = st.number_input("Please enter your finance marks:", key="finance_input")
-        # accounting = st.number_input("Please enter your accounting marks:", key="accounting_input")
-        # economics = st.number_input("Please enter your economics marks:", key="economics_input")
-        m_i_c=[maths,finance,accounting,economics]
-        m_i_reshaped = np.array(m_i_c).reshape(1, -1)
-        Y_pred_C=knn.predict(m_i_reshaped)
-        st.write(Y_pred_C)
-    if 'rt' in stream :
-        X_train_A,X_test_A,Y_train_A,Y_test_A=train_test_split(X_A,Y_A,test_size=0.4,random_state=119)
-        Scaler=StandardScaler()
-        X_train_A=Scaler.fit_transform(X_train_A)
-        X_test_A=Scaler.transform(X_test_A)
-        K=6
-        knn=KNeighborsClassifier(n_neighbors=K)
-        knn.fit(X_train_A,Y_train_A)
-        Y_pred_A=knn.predict(X_test_A)
-        accuracy=accuracy_score(Y_test_A,Y_pred_A)
-        # print(f"Accuracy: {accuracy}")
-        maths=int(st.number_input("please enter your maths marks :",key="Arts_maths_input"))
-        design=int(st.number_input("please enter your design marks :"))
-        creativity=int(st.number_input("please enter your creativity marks :"))
-        management=int(st.number_input("please enter your management marks :"))
-        communication=int(st.number_input("please enter your communication marks :"))
-        m_i_a=[maths,design,creativity,management,communication]
-        m_i_reshaped = np.array(m_i_a).reshape(1, -1)
-        Y_pred_A=knn.predict(m_i_reshaped)
-        st.write(f"The path which will be best for you is {Y_pred_A[0]}")
-    # else:
-    #     #  ("invalid input")
+            knn.fit(X_train_S, Y_train_S)
+            Y_pred_S = knn.predict(X_test_S)
+            accuracy = accuracy_score(Y_test_S, Y_pred_S)
+            # print(f"Accuracy: {accuracy}")
+            maths=int(st.number_input("please enter your maths marks :"))
+            physics=int(st.number_input("please enter your physics marks :"))
+            chemistry=int(st.number_input("please enter your chemistry marks :"))
+            biology=int(st.number_input("please enter your biology marks :"))
+            m_i_s=[maths,physics,chemistry,biology]
+            # st.write(m_i_s)
+            m_i_reshaped = np.array(m_i_s).reshape(1, -1)
+            Y_pred_S=knn.predict(m_i_reshaped)
+            if Y_pred_S[0]==1:
+                st.markdown("# JEE will be best for you.")
+            else:
+                if Y_pred_S[0]!=1:
+                  st.markdown("# NEET will be best for you.")
+
+        elif 'omm'  in stream :
+            X_train_C,X_test_C,Y_train_C,Y_test_C=train_test_split(X_C,Y_C,test_size=0.3,random_state=1)
+            Scaler=StandardScaler()
+            X_train_C=Scaler.fit_transform(X_train_C)
+            X_test_C=Scaler.transform(X_test_C)
+            K=3
+            knn=KNeighborsClassifier(n_neighbors=K)
+            knn.fit(X_train_C,Y_train_C)
+            Y_pred_C=knn.predict(X_test_C)
+            accuracy=accuracy_score(Y_test_C,Y_pred_C)
+            print(f"Accuracy: {accuracy}")      
+            # Streamlit input fields
+            maths = st.number_input("Enter your maths marks:", key="maths_input")
+            finance = st.number_input("Enter your finance marks:", key="finance_input")
+            accounting = st.number_input("Enter your accounting marks:", key="accounting_input")
+            economics = st.number_input("Enter your economics marks:", key="economics_input")
+
+            # maths = st.number_input("Please enter your maths marks:", key="maths_input")
+            # finance = st.number_input("Please enter your finance marks:", key="finance_input")
+            # accounting = st.number_input("Please enter your accounting marks:", key="accounting_input")
+            # economics = st.number_input("Please enter your economics marks:", key="economics_input")
+            m_i_c=[maths,finance,accounting,economics]
+            m_i_reshaped = np.array(m_i_c).reshape(1, -1)
+            Y_pred_C=knn.predict(m_i_reshaped)
+            a=Y_pred_C[0]
+            st.markdown(f"# {a} will be best for you.")
+        if 'rt' in stream :
+            X_train_A,X_test_A,Y_train_A,Y_test_A=train_test_split(X_A,Y_A,test_size=0.4,random_state=119)
+            Scaler=StandardScaler()
+            X_train_A=Scaler.fit_transform(X_train_A)
+            X_test_A=Scaler.transform(X_test_A)
+            K=6
+            knn=KNeighborsClassifier(n_neighbors=K)
+            knn.fit(X_train_A,Y_train_A)
+            Y_pred_A=knn.predict(X_test_A)
+            accuracy=accuracy_score(Y_test_A,Y_pred_A)
+            # print(f"Accuracy: {accuracy}")
+            maths=int(st.number_input("please enter your maths marks :",key="Arts_maths_input"))
+            design=int(st.number_input("please enter your design marks :"))
+            creativity=int(st.number_input("please enter your creativity marks :"))
+            management=int(st.number_input("please enter your management marks :"))
+            communication=int(st.number_input("please enter your communication marks :"))
+            m_i_a=[maths,design,creativity,management,communication]
+            m_i_reshaped = np.array(m_i_a).reshape(1, -1)
+            Y_pred_A=knn.predict(m_i_reshaped)
+            a=Y_pred_A[0]
+            st.markdown(f"# {a} will be best for you.")
+    else:
+             st.info(" Please enter a valid input")
+
 
