@@ -20,7 +20,7 @@ st.components.v1.html(
     """,
     height=0, 
 )
-st.title("Welcome to Path Predtictor") 
+st.title("Welcome to Path Predictor") 
 st.info("This will help you to find best career ta suits you")
 
 
